@@ -39,11 +39,17 @@ describe Gravtastic do
       stub(b).email{ 'user@example.com' }
       a.gravatar_id.should == b.gravatar_id
     end
-    
+
     it "shouldn't touch the gravatar source when it's not an email address" do
       a = @g.new
       stub(a).email{ 'b58996c504c5638798eb6b511e6f49af' }
       a.gravatar_id.should == a.email
+    end
+
+    it "should not fail when the email address is nil" do
+      a = @g.new
+      stub(a).email{ nil }
+      expect { a.gravatar_id }.not_to raise_error
     end
 
   end

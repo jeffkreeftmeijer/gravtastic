@@ -27,7 +27,7 @@ module Gravtastic
 
     alias_method :has_gravatar, :is_gravtastic
     alias_method :is_gravtastic!, :is_gravtastic
-    
+
   end
 
   module ClassMethods
@@ -55,11 +55,11 @@ module Gravtastic
   module InstanceMethods
 
     def gravatar_id
-      if send(self.class.gravatar_source).include? '@'
-        Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s.downcase)
-      else
-        send(self.class.gravatar_source)
+      source = send(self.class.gravatar_source)
+      if source && source.include?('@')
+        return Digest::MD5.hexdigest(source.to_s.downcase)
       end
+      source
     end
 
     def gravatar_url(options={})
